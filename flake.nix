@@ -17,18 +17,31 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
-    pkgs = import nixpkgs {inherit system;};
+    pkgs = import nixpkgs {
+      inherit system;
+      overlays = [(final: prev: {inherit warcraft-vulkan-overlay;})];
+    };
+    warcraft-vulkan-overlay = pkgs.callPackage ./default.nix {
+      pname = "warcraft-vulkan-overlay";
+      version = "2.0.4.23452";
+    };
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [inputs.flake-parts.flakeModules.easyOverlay];
       systems = [system];
       perSystem = {
         config,
         system,
         ...
       }: {
+        overlayAttrs = {inherit warcraft-vulkan-overlay;};
+        packages = {inherit warcraft-vulkan-overlay;} // {default = self.packages.${system}.warcraft-vulkan-overlay;};
         devShells = {
           default = pkgs.mkShell {
-            buildInputs = (with inputs.wine-overlays.packages.${system}; [wine winetricks-compat]) ++ (with pkgs; [winetricks]);
+            buildInputs =
+              (with inputs.wine-overlays.packages.${system}; [wine winetricks-compat])
+              ++ (with pkgs; [winetricks])
+              ++ [warcraft-vulkan-overlay];
             shellHook = ''
               export VK_INSTANCE_LAYERS="VK_LAYER_WARCRAFT_overlay"
               export VK_LOADER_DEBUG="none"
