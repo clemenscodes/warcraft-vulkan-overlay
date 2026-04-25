@@ -30,10 +30,13 @@ in
     installPhase = ''
       runHook preInstall
 
-      mkdir -p $out/lib $out/share/vulkan/explicit_layer.d
+      layerDir="$out/share/vulkan/implicit_layer.d"
+      mkdir -p "$out/lib" "$layerDir"
 
-      ln -sf ${layer} $out/lib/${layerSo}
-      jq --arg path "$out/lib/${layerSo}" '.layers[0].library_path = $path' ${manifest} > $out/share/vulkan/explicit_layer.d/${layerJson}
+      ln -sf ${layer} "$out/lib/${layerSo}"
+      jq --arg path "./${layerSo}" '.layers[0].library_path = $path' ${manifest} \
+        > "$layerDir/${layerJson}"
+      ln -s "../../../lib/${layerSo}" "$layerDir/${layerSo}"
 
       runHook postInstall
     '';
