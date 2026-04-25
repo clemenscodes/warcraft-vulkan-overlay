@@ -69,8 +69,7 @@
             default = pkgs.mkShell {
               buildInputs =
                 (with inputs.wine-overlays.packages.${system}; [
-                  wine
-                  winetricks-compat
+                  wine-11_7
                 ])
                 ++ (with pkgs; [ winetricks ])
                 ++ [ warcraft-vulkan-overlay ];
