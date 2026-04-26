@@ -25,7 +25,7 @@
       };
       warcraft-vulkan-overlay = pkgs.callPackage ./default.nix {
         pname = "warcraft-vulkan-overlay";
-        version = "2.0.4.23745";
+        version = "2.0.4.23745-r1";
       };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
