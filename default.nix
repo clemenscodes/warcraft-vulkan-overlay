@@ -11,7 +11,7 @@
   layerSo = "libVkLayer_warcraft_overlay.so";
   layer = fetchurl {
     url = "https://github.com/${repo}/releases/download/${version}/${layerSo}";
-    sha256 = "sha256-1XkJvv61bfvnkh4XNMB6TbnROg6kc55odUaayyWL9aA=";
+    sha256 = "sha256-24GkhLtj0S48jCw3W2JQBKyHQI/YZuSnd8AzUFEy2Z4=";
   };
   manifest = fetchurl {
     url = "https://github.com/${repo}/releases/download/${version}/${layerJson}";
