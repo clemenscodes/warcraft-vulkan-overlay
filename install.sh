@@ -6,7 +6,7 @@
 set -eu
 
 REPO="clemenscodes/warcraft-vulkan-overlay"
-RELEASE="2.0.4.23745-r4"
+RELEASE="2.0.4.23745-r5"
 
 LAYER_JSON="VkLayer_warcraft_overlay_linux.json"
 LAYER_SO="libVkLayer_warcraft_overlay.so"
